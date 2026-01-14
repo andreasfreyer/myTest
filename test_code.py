@@ -2,18 +2,21 @@
 """
 Example module for testing merge conflicts.
 This file demonstrates various code structures.
+Updated: Added async support
 """
 
 import os
 import sys
+import asyncio
 from typing import List, Optional, Dict
 
 
 # Configuration constants
 DEBUG_MODE = False
 MAX_RETRIES = 3
-TIMEOUT_SECONDS = 30
+TIMEOUT_SECONDS = 60
 DEFAULT_BUFFER_SIZE = 4096
+ASYNC_ENABLED = True
 
 
 class DataProcessor:
@@ -53,6 +56,11 @@ class DataProcessor:
         self.data.append(result)
         return result
 
+    async def process_item_async(self, item: str) -> Optional[str]:
+        """Process a single item asynchronously."""
+        await asyncio.sleep(0.01)
+        return self.process_item(item)
+
     def process_batch(self, items: List[str]) -> List[str]:
         """Process multiple items."""
         results = []
@@ -62,12 +70,19 @@ class DataProcessor:
                 results.append(processed)
         return results
 
+    async def process_batch_async(self, items: List[str]) -> List[str]:
+        """Process multiple items asynchronously."""
+        tasks = [self.process_item_async(item) for item in items]
+        results = await asyncio.gather(*tasks)
+        return [r for r in results if r is not None]
+
     def get_statistics(self) -> Dict[str, int]:
         """Get processing statistics."""
         return {
             "total_items": len(self.data),
             "total_errors": len(self.errors),
             "buffer_size": self.buffer_size,
+            "async_enabled": ASYNC_ENABLED,
         }
 
     def reset(self) -> None:
@@ -84,6 +99,12 @@ def calculate_checksum(data: bytes) -> int:
         total += byte
         total = total % 65536
     return total
+
+
+async def calculate_checksum_async(data: bytes) -> int:
+    """Calculate checksum asynchronously."""
+    await asyncio.sleep(0)
+    return calculate_checksum(data)
 
 
 def format_output(items: List[str], prefix: str = "") -> str:
@@ -103,17 +124,31 @@ def validate_input(value: str) -> bool:
     return True
 
 
-def main():
-    """Main entry point."""
+async def main_async():
+    """Async main entry point."""
     processor = DataProcessor("test")
     processor.initialize()
 
     test_data = ["hello", "world", "test", "data"]
-    results = processor.process_batch(test_data)
+    results = await processor.process_batch_async(test_data)
 
-    print("Processing complete")
+    print("Async processing complete")
     print(f"Results: {results}")
     print(f"Stats: {processor.get_statistics()}")
+
+
+def main():
+    """Main entry point."""
+    if ASYNC_ENABLED:
+        asyncio.run(main_async())
+    else:
+        processor = DataProcessor("test")
+        processor.initialize()
+        test_data = ["hello", "world", "test", "data"]
+        results = processor.process_batch(test_data)
+        print("Processing complete")
+        print(f"Results: {results}")
+        print(f"Stats: {processor.get_statistics()}")
 
 
 if __name__ == "__main__":
