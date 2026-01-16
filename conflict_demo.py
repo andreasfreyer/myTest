@@ -10,18 +10,13 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def greet(name: str) -> str:
-    """Return a greeting message with logging."""
-    logger.info(f"Greeting {name}")
-    return f"Welcome, {name}!"
-
-
-def calculate(a: int, b: int) -> int:
-    """Calculate sum with logging."""
-    logger.info(f"Calculating {a} + {b}")
-    result = a + b
-    logger.info(f"Result: {result}")
-    return result
+def calculate(a: int, b: int, operation: str = "add") -> int:
+    """Calculate with multiple operations."""
+    if operation == "add":
+        return a + b
+    elif operation == "multiply":
+        return a * b
+    return 0
 
 
 def main():
