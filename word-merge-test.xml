@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <general>
+        <name>Test Configuration</name>
+        <version>1.0</version>
+    </general>
+    <services>
+        <!-- This is a very long process list that will need word-level merge -->
+        <processProperty>/Services/OMS/Impl/Belege/QueueListener.process,/Services/OMS/UnitTest/MockServer.process,/Services/OMS/Impl/Belege/Mapping/PrintAccountingCalculation.process,/Services/OMS/Impl/Belege/Mapping/PrintSecAccStmt.process,/Services/OMS/Impl/Belege/Mapping/PrintAccountingCalcCounterparty.process,/Services/Library/Impl/OnStartupOnShutdown/OnShutdown.process,/Services/Library/Impl/OnStartupOnShutdown/OnStartup.process,/Services/Library/Impl/ErrorHandling/OnError.process,/Services/OMS/Impl/Belege/Mapping/PrintAdvice.process,/Services/OMS/Impl/Belege/Mapping/PrintAdviceOfExecution.process,/Services/OMS/Impl/Belege/Mapping/PrintComplaint.process,/Services/OMS/Impl/Belege/Mapping/PrintSecAccFeeReport.process,/Services/OMS/Impl/Belege/Mapping/PrintSecAccFeeRetPeriodReport.process,/Services/OMS/Impl/Belege/Mapping/PrintSecAccFeeCollectReport.process,/Services/OMS/Impl/Belege/Mapping/PrintInvestShareHoldings.process,/Services/OMS/Impl/Belege/Mapping/PrintPortfStatement.process,/Services/OMS/Impl/Common/OnStartupCheckGeosWsdls.process,/Services/OMS/Impl/Belege/Mapping/PrintOrderConfirmation.process,/Services/OMS/Impl/ApexToOMS/TradeConfirmationRepoLeihe/ReceiveTradeConfirmationRepoLeiheFromApex.process</processProperty>
+        <!-- Another configuration line -->
+        <timeout>30000</timeout>
+        <retry>3</retry>
+    </services>
+    <database>
+        <host>localhost</host>
+        <port>5432</port>
+    </database>
+</configuration>
