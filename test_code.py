@@ -36,7 +36,6 @@ class DataProcessor:
 
         try:
             self._setup_buffers()
-            self._load_config()
             self._initialized = True
             return True
         except Exception as e:
@@ -48,19 +47,9 @@ class DataProcessor:
         self.data = []
         self.errors = []
 
-    def _load_config(self) -> None:
-        """Load configuration from environment."""
-        self.config = {
-            "debug": os.getenv("DEBUG", "false").lower() == "true",
-            "timeout": int(os.getenv("TIMEOUT", "30")),
-        }
-
     def process_item(self, item: str) -> Optional[str]:
-        """Process a single item with validation."""
+        """Process a single item."""
         if not item:
-            return None
-
-        if not validate_input(item):
             return None
 
         result = item.strip().upper()
@@ -73,10 +62,9 @@ class DataProcessor:
         return self.process_item(item)
 
     def process_batch(self, items: List[str]) -> List[str]:
-        """Process multiple items with progress tracking."""
+        """Process multiple items."""
         results = []
-        total = len(items)
-        for idx, item in enumerate(items):
+        for item in items:
             processed = self.process_item(item)
             if processed:
                 results.append(processed)
@@ -128,12 +116,10 @@ def format_output(items: List[str], prefix: str = "") -> str:
 
 
 def validate_input(value: str) -> bool:
-    """Validate input string with extended checks."""
+    """Validate input string."""
     if not value:
         return False
     if len(value) > 1000:
-        return False
-    if any(char in value for char in ['<', '>', '&']):
         return False
     return True
 
