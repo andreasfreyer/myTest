@@ -1,5 +1,5 @@
 product_id,product_name,category,price,stock_quantity
-P001,Laptop Dell XPS 15,Electronics,1299.99,45
-P002,Office Chair Premium,Furniture,399.50,120
-P003,Wireless Mouse Logitech,Electronics,29.99,200
+P001,Laptop Dell XPS 15,Electronics,1299.99,52
+P002,Office Chair Premium,Furniture,399.50,135
+P003,Wireless Mouse Logitech,Electronics,29.99,180
 P004,Standing Desk,Furniture,599.00,35
